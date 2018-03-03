@@ -1,0 +1,9 @@
+/**
+ * Class constructor.
+ *
+ * %(docblock)s
+ */
+public function __construct(%(arguments)s)
+{
+	%(affectations)s
+}
