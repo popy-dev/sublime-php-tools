@@ -1,9 +1,10 @@
 SublimeText PHP tools plugin
 ============================
 
-
 Class constructor generator
 ---------------------------
+
+Command : `PHP: Generate Constructor for Class`
 
 Reads a class properties and their related docblock to generate a typehinted class constructor and
 its docblock.
