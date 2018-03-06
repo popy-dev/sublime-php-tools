@@ -2,5 +2,9 @@
     {
         "caption": "PHP: Generate Constructor for Class",
         "command": "php_tools_generate_constructor"
+    },
+    {
+        "caption": "PHP: Check Use",
+        "command": "php_tools_check_use"
     }
 ]
