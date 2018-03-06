@@ -255,7 +255,7 @@ class Commander():
         return used
 
 
-class PhpCheckUseCommand(sublime_plugin.WindowCommand):
+class PhpToolsCheckUseCommand(sublime_plugin.WindowCommand):
     def run(self):
         if not self.isPhpSyntax():
             log('Only available in a PHP file')

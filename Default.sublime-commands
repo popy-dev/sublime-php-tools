@@ -5,6 +5,6 @@
     },
     {
         "caption": "PHP: Check Use",
-        "command": "php_check_use"
+        "command": "php_tools_check_use"
     }
 ]
