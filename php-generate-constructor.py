@@ -7,25 +7,25 @@ from os.path import dirname, realpath
 PLUGIN_DIR = dirname(realpath(__file__))
 
 def log(msg):
-	print ("[PHP Constructors] %s" % msg)
+	print ("[PHP Constructors] " + msg)
 
 class Template(object):
-    def __init__(self, name):
-    	path = os.path.join(PLUGIN_DIR, 'templates', name)
+	def __init__(self, name):
+		path = os.path.join(PLUGIN_DIR, 'templates', name)
 
-        log("opening template %s" % path)
+		log("opening template " + path)
 
-        self.content = open(path).read()
+		self.content = open(path).read()
 
-    def replace(self, args):
-        return self.content % args
+	def replace(self, args):
+		return self.content % args
 
 
 class Property:
 	def __init__(self, name, type, comment):
 		self.name = name
-		self.type = type
-		self.comment = comment
+		self.type = type or ''
+		self.comment = comment or ''
 
 	def toParamAnnotation(self, nameLength, typeLength):
 		npad = 1 + nameLength - len(self.name)
@@ -33,6 +33,9 @@ class Property:
 		return self.type + (' ' * tpad) + '$' + self.name + (' ' * npad) + self.comment
 
 	def toConstructorArgument(self, nameLength, typeLength):
+		if self.type == '':
+			return '$' + self.name
+
 		res = self.type + ' $' + self.name
 		if self.type[0:1] == '?':
 			res = res[1:] + ' = null'
@@ -60,7 +63,6 @@ class PropertyCollection:
 		return len(self.collection)
 
 
-
 # /\*\*\n
 # (?:\s*\*\s+([^\n]+)\n)?
 # (?:\s*\*[^\n]*\n)*
@@ -68,7 +70,6 @@ class PropertyCollection:
 # (?:\s*\*[^\n]*\n)*
 # \s*\*/\n
 # \s*(?:public|protected|private|var)\s+\$
-
 
 class PhpToolsGenerateConstructorCommand(sublime_plugin.TextCommand):
 	propertyPattern = '(?:/\*\*\n(?:\s*\*\s+([^\n]+)\n)?(?:\s*\*[^\n]*?\n)*\s*\*\s+@var\s+(\S+)(?:\s[^\n]*)?\n(?:\s*\*[^\n]*?\n)*\s*\*/)?\n\s*(?:public|protected|private|var)\s+\$([^=;=\s]+)'
@@ -119,7 +120,7 @@ class PhpToolsGenerateConstructorCommand(sublime_plugin.TextCommand):
 		})
 
 	def isPhpSyntax(self):
-		return re.search(".*\PHP.tmLanguage", self.view.settings().get('syntax')) is not None
+		return re.search(".*\PHP", self.view.settings().get('syntax')) is not None
 
 	def is_enabled(self):
 		return self.isPhpSyntax()
