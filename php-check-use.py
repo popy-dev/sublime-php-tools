@@ -7,7 +7,7 @@ from os.path import isfile, join
 
 
 def log(msg):
-    print "[PHP Check Use] %s" % msg
+    print("[PHP Check Use] %s" + msg)
 
 
 class UseDefCollection():
@@ -272,4 +272,4 @@ class PhpToolsCheckUseCommand(sublime_plugin.WindowCommand):
         return self.isPhpSyntax()
 
     def isPhpSyntax(self):
-        return re.search(".*\PHP.tmLanguage", self.window.active_view().settings().get('syntax')) is not None
+        return re.search(".*\PHP", self.window.active_view().settings().get('syntax')) is not None
